@@ -1,5 +1,5 @@
 {
-  "name": "generator-tdd",
+  "name": "generator-express",
   "version": "0.1.0",
   "description": "A Yeoman Generator to create a simple Express app",
   "files": [
