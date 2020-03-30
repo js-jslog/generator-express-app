@@ -1,5 +1,6 @@
 const Generator = require('yeoman-generator');
 const DotfilesGenerator = require.resolve('generator-dotfiles/generators/app');
+const augmentPackageJson = require('generator-dotfiles/utilities/augmentPackageJson');
 
 const MyBase = class extends Generator {
   copyTemplateFiles() {
@@ -10,6 +11,17 @@ const MyBase = class extends Generator {
       this.templatePath('**/*'),
       this.destinationRoot()
     );
+  };
+  decoratePackageJsonBeforeInstall() {
+    const packageJsonAugmentation = {
+      name: 'express',
+      description: 'A basic express project',
+      main: 'app.js',
+      dependencies: {
+        express: '^4.16.4'
+      },
+    };
+    augmentPackageJson(packageJsonAugmentation, this.destinationPath('package.json'));
   };
 };
 
@@ -24,6 +36,7 @@ module.exports = class extends MyBase {
   }
 
   install() {
+    this.decoratePackageJsonBeforeInstall();
     this.npmInstall();
   }
 };
